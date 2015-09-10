@@ -1,0 +1,10 @@
+.idea
+*.remote
+*.sublime-*
+*.txt
+node_modules
+.sass-cache
+css/*.css
+css/*.css.map
+scripts/*.min.js
+scripts/*.min.js.map
