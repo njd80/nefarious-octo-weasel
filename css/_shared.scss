@@ -1,0 +1,11 @@
+@import "_variables.scss";
+
+//SHARED STYLES
+
+header,
+section,
+footer {
+	max-width: 1170px;
+	margin: 10px auto 10px auto;
+	text-align: center;
+}
