@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 
 		//CLEAN
 		clean: {
-			css: ['css/*.css', 'css/*.css.map'],
+			css: ['.sass-cache','css/*.css', 'css/*.css.map'],
 			js: ['scripts/*.min.js','scripts/*.min.js.map']
 		},
 
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 					cwd: 'scripts',
 					src: '*.js',
 					dest: 'scripts',
-        			ext: '.min.js'
+					ext: '.min.js'
 				}]
 				/*files: {
 					'scripts/*.min.js':'scripts/*.js'
