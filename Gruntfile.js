@@ -89,9 +89,6 @@ module.exports = function(grunt) {
 					dest: 'scripts',
 					ext: '.min.js'
 				}]
-				/*files: {
-					'scripts/*.min.js':'scripts/*.js'
-				}*/
 			}
 		},
 
