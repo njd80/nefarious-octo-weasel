@@ -32,14 +32,14 @@ module.exports = function(grunt) {
 				}
 			},
 			html: {
-				files: ['index.html'],
+				files: ['*.html'],
 				options: {
 					livereload: '<%=connect.options.livereload %>'
 				}
 			}
 		},
 
-		//CONNECT - :52193
+		//CONNECT
 		connect: {
 			options: {
 				port: 9999,
