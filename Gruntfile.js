@@ -19,14 +19,14 @@ module.exports = function(grunt) {
 		watch: {
 			sass: {
 				files: ['css/*.scss'],
-				tasks: ['clean:css','sass','cssmin'],
+				tasks: ['sass','cssmin'],
 				options: {
 					livereload: '<%=connect.options.livereload %>'
 				}
 			},
 			js: {
 				files: ['scripts/*.js','!scripts/*.min.*'],
-				tasks: ['clean:js','jshint','uglify'],
+				tasks: ['jshint','uglify'],
 				options: {
 					livereload: '<%=connect.options.livereload %>'
 				}
@@ -65,15 +65,9 @@ module.exports = function(grunt) {
 			}
 		},
 
-		//CLEAN
-		clean: {
-			css: ['.sass-cache','css/*.css', 'css/*.css.map'],
-			js: ['scripts/*.min.js','scripts/*.min.js.map']
-		},
-
 		//JSHINT
 		jshint: {
-			src: ['scripts/*.js']
+			src: ['scripts/*.js', '!scripts/*.min.js']
 		},
 
 		//UGLIFY
@@ -110,11 +104,10 @@ module.exports = function(grunt) {
 	/* REGISTER TASKS */
 	//"build"
 	grunt.registerTask('build', [
-		'clean',		//clean out generated css & js files
-		'sass',			//compile the SASS files
-		'cssmin',		//minify the generated CSS
-		'jshint',		//check script syntax
-		'uglify'		//minify the JS files
+		'sass',					//compile the SASS files
+		'cssmin',				//minify the generated CSS
+		'jshint',				//check script syntax
+		'uglify'				//minify the JS files
 	]);
 
 	//"serve" task
