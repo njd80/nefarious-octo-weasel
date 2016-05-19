@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 		//WATCH
 		watch: {
 			sass: {
-				files: ['css/*.scss'],
+				files: ['sass/*.scss'],
 				tasks: ['sass','cssmin'],
 				options: {
 					livereload: '<%=connect.options.livereload %>'
@@ -56,11 +56,8 @@ module.exports = function(grunt) {
 		//SASS
 		sass: {
 			css: {
-				options: {
-					sourcemap: 'none'
-				},
 				files: {
-					'css/styles.css':'css/styles.scss'
+					'css/styles.css':'sass/styles.scss'
 				}
 			}
 		},
@@ -96,6 +93,12 @@ module.exports = function(grunt) {
 					'css/styles.min.css':'css/styles.css'
 				}
 			}
+		},
+
+		//CLEAN
+		clean: {
+			css: ['css/*.css'],
+			js: ['scripts/*.min.js','scripts/*.min.js.map']
 		}
 
 	});
