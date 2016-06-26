@@ -1,6 +1,3 @@
-/**
-* Grunt Configuration
-*/
 module.exports = function(grunt) {
 
 	// Auto-Load Tasks
@@ -18,87 +15,105 @@ module.exports = function(grunt) {
 		//WATCH
 		watch: {
 			sass: {
-				files: ['sass/*.scss'],
-				tasks: ['sass','cssmin'],
+				files: ['src/sass/*.scss'],
+				tasks: ['sass'],
 				options: {
-					livereload: '<%=connect.options.livereload %>'
+					livereload: true
 				}
 			},
 			js: {
-				files: ['scripts/*.js','!scripts/*.min.*'],
+				files: ['src/scripts/*.js'],
 				tasks: ['jshint','uglify'],
 				options: {
-					livereload: '<%=connect.options.livereload %>'
+					livereload: true
 				}
 			},
 			html: {
-				files: ['*.html'],
+				files: ['src/html/*.html'],
+				tasks: ['copy:html'],
 				options: {
-					livereload: '<%=connect.options.livereload %>'
+					livereload: true
 				}
-			}
+			},
+            data: {
+				files: ['src/data/*.json'],
+				tasks: ['copy:data'],
+				options: {
+					livereload: true
+				}
+            }
 		},
 
 		//CONNECT
 		connect: {
-			options: {
-				port: 9999,
-				hostname: '*',
-				livereload: true
+            server: {
+                options: {
+                    port: 9999,
+					hostname: '*',
+                    base: 'app',
+                    livereload: true,
+                    open: true
+                }
+            }
+		},
+
+		//COPY
+		copy: {
+			data: {
+				expand: true,
+			    cwd: 'src/data',
+				src: '**',
+				dest: 'app/data/',
+				flatten: true,
+				filter: 'isFile'
 			},
-			livereload: {
-				options: {
-					open: true
-				}
+			html: {
+				expand: true,
+			    cwd: 'src/html',
+				src: '**',
+				dest: 'app/',
+				flatten: true,
+				filter: 'isFile'
 			}
 		},
 
 		//SASS
 		sass: {
-			css: {
-				files: {
-					'css/styles.css':'sass/styles.scss'
-				}
-			}
-		},
+            sass: {
+                options: {
+                    sourceMap: true,
+                    style: 'compact'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'src/sass/',
+                    src: ['*.scss'],
+                    dest: 'app/css/',
+                    ext: '.css',
+                    extDot: 'last'
+                }]
+            }
+        },
 
 		//JSHINT
 		jshint: {
-			src: ['scripts/*.js', '!scripts/*.min.js']
+			src: ['src/scripts/*.js']
 		},
 
 		//UGLIFY
 		uglify: {
-			options: {
-				sourceMap: true
-			},
 			js: {
+    			options: {
+    				sourceMap: true
+    			},
 				files: [{
 					expand: true,
-					cwd: 'scripts',
+					cwd: 'src/scripts',
 					src: '*.js',
-					dest: 'scripts',
+					dest: 'app/scripts',
 					ext: '.min.js'
 				}]
 			}
-		},
-
-		//CSSMIN
-		cssmin: {
-			options: {
-				sourceMap: true
-			},
-			css: {
-				files: {
-					'css/styles.min.css':'css/styles.css'
-				}
-			}
-		},
-
-		//CLEAN
-		clean: {
-			css: ['css/*.css'],
-			js: ['scripts/*.min.js','scripts/*.min.js.map']
 		}
 
 	});
@@ -107,17 +122,17 @@ module.exports = function(grunt) {
 	/* REGISTER TASKS */
 	//"build"
 	grunt.registerTask('build', [
-		'sass',					//compile the SASS files
-		'cssmin',				//minify the generated CSS
-		'jshint',				//check script syntax
-		'uglify'				//minify the JS files
+		'sass',		//compile SASS & place in /app
+		'jshint',	//check script(s)
+		'uglify',	//minify JS & place in /app
+        'copy'      //copy data & html to app
 	]);
 
 	//"serve" task
 	grunt.registerTask('serve', [
-		'build',            	//build
-		'connect:livereload',   //create and connect to the server
-		'watch'                 //watch for changes
+		'build',	//build
+		'connect',	//create and connect to the server
+		'watch'     //watch for changes
 	]);
 	/* END REGISTER TASKS */
 
